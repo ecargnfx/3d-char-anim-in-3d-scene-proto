@@ -3,6 +3,7 @@ import { PerspectiveCamera, OrbitControls, Environment } from '@react-three/drei
 import FBXModel from '../components/FBXModel';
 import GLTFModel from '../components/GLTFModel';
 import CameraSetup from '../components/CameraSetup'; 
+import React, { useState } from 'react';
 // import TeleportButton from '../components/TeleportButton'; 
 import InputPrompt from '../components/InputPrompt/InputPrompt';
 import dynamic from 'next/dynamic';
@@ -14,6 +15,31 @@ const DynamicCharacterModel = dynamic(() => import('../components/FBXModelWithAn
 
 
 export default function Home() {
+
+    const [actionName, setActionName] = useState('default');
+
+    const handleUserInputChange = (input) => {
+        switch (input) {
+        case 'walk':
+            setActionName('walk');
+            break;
+        case 'kick':
+            setActionName('kick');
+            break;
+        case 'dance':
+            setActionName('dance');
+            break;
+        case 'crouch':
+            setActionName('crouch');
+            break;
+        case 'stop':
+            setActionName('default');
+            break;
+        default:
+            console.log(`Unknown input: ${input}`);
+        }
+    };
+
   return (
     <div style={{ width: '99vw', height: '98vh' }}>
       <Canvas style={{ background: 'lightgray' }}>
@@ -23,12 +49,13 @@ export default function Home() {
 
         {/* <FBXModel url="https://faced.io/teleported/teleported.fbx" /> */}
         {/* <FBXModel url="/Capoeira.fbx" />         */}
-        <DynamicCharacterModel />
+        <DynamicCharacterModel actionName={actionName} />
         <OrbitControls />
         {/* <Environment background={true} path="/assets/skybox/" files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']} /> */}
-        <GLTFModel url="/scene.gltf" />
+        <GLTFModel url="/wisp_forest.glb" />
       </Canvas>
-        <InputPrompt />
+
+      <InputPrompt onInputChange={handleUserInputChange} />
     </div>
   );
 }

@@ -1,7 +1,14 @@
 import React from 'react';
 import './InputPrompt.css';
 
-const InputPrompt = () => {
+interface InputPromptProps {
+  onInputChange: (input: string) => void;
+}
+
+const InputPrompt: React.FC<InputPromptProps> = ({ onInputChange }) => {
+  const handleInputChange = (event) => {
+    onInputChange(event.target.value);
+  };
   return (
     <div className="input-prompt-container">
       <div className="tabs">
@@ -21,7 +28,7 @@ const InputPrompt = () => {
       <div className="textfield">
         <img src="/assets/icons/icon-upload.png" alt="Left Icon 1" />
         <img src="/assets/icons/icon-camera.png" alt="Left Icon 2" />
-        <input type="text" placeholder="Describe what you want to see" />
+        <input type="text" placeholder="Describe what you want to see" onChange={(e) => onInputChange(e.target.value)} />      
         <img src="/assets/icons/icon-send.png" alt="Right Icon 1" />
         <img src="/assets/icons/icon-mic.png" alt="Right Icon 2" />
       </div>

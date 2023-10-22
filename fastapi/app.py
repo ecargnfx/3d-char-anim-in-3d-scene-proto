@@ -36,7 +36,7 @@ async def read_root():
 @app.post("/gen-setup")
 async def gen_setup(request: Request):
 
-    SYSTEM_MESSAGE = '''You are an assistant helps build a scene from a film. Your job is to pick out the ideal aspects of the scene based on a specific request of the user. You will return a JSON object with each of the parameters of your choice. The first parameter is the scene subject action, and here are the prompts: walk, kick, dance, crouch. Example: user: give me a dramatic scene. you:"{"action": "walk"}"'''
+    SYSTEM_MESSAGE = '''You are an assistant helps build a scene from a film. Your job is to pick out the ideal aspects of the scene based on a specific request of the user. You will return a JSON object with each of the parameters of your choice. The first parameter is the scene subject action, and here are the prompts: walk, kick, dance, crouch. The second parameter is the environment, and here are the options: empty_old_garage, castle_dungeon, scifi_tron. The third parameter is the lighting color, and you will return a color in hexadecimal format that will go to the main light in the scene. The fourth parameter is the music beat, and the options are: sad, happy, dramatic, scary. Example: user: give me a dramatic scene. you:"{"action": "walk", "empty_old_garage", "lighting": "#ff0000", "music": "dramatic"}"'''
 
     try:
         data = await request.json()

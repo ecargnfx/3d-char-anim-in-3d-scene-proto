@@ -53,6 +53,7 @@ export default function Home() {
         <OrbitControls />
         {/* <Environment background={true} path="/assets/skybox/" files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']} /> */}
         <GLTFModel url="/wisp_forest.glb" />
+        {/* <GLTFModel url="/Spiderman walking.glb" /> */}
       </Canvas>
 
       <InputPrompt onInputChange={handleUserInputChange} />

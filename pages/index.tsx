@@ -3,7 +3,7 @@ import { PerspectiveCamera, OrbitControls, Environment } from '@react-three/drei
 import FBXModel from '../components/FBXModel';
 import GLTFModel from '../components/GLTFModel';
 import CameraSetup from '../components/CameraSetup'; 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 // import TeleportButton from '../components/TeleportButton'; 
 import InputPrompt from '../components/InputPrompt/InputPrompt';
 import dynamic from 'next/dynamic';
@@ -14,26 +14,45 @@ const DynamicCharacterModel = dynamic(() => import('../components/FBXModelWithAn
 });
 
 
+
+
+
 export default function Home() {
 
     const [actionName, setActionName] = useState('default');
+    const pointLightRef = useRef();
+    const [gltfModelUrl, setGltfModelUrl] = useState("/wisp_forest.glb");
+
 
     const handleUserInputChange = (input) => {
         switch (input) {
         case 'walk':
             setActionName('walk');
+            setGltfModelUrl("/neon_bedroom.glb");
+            if (pointLightRef.current) {
+                pointLightRef.current.color.set('#ff0000'); // red light for walk
+                console.log("Light color set to:", pointLightRef.current.color.getHexString()); // Log the color change
+            }
             break;
         case 'kick':
             setActionName('kick');
+            setGltfModelUrl("/empty_old_garage_room.glb");
+            if (pointLightRef.current) pointLightRef.current.color.set('#00ff00'); // green light for kick
             break;
         case 'dance':
             setActionName('dance');
+            setGltfModelUrl("/empty_old_garage_room.glb");
+            if (pointLightRef.current) pointLightRef.current.color.set('#0000ff'); // blue light for dance
             break;
-        case 'crouch':
-            setActionName('crouch');
+        case 'combo':
+            setActionName('combo');
+            setGltfModelUrl("/empty_old_garage_room.glb");
+            if (pointLightRef.current) pointLightRef.current.color.set('#ffff00'); // yellow light for combo
             break;
         case 'stop':
             setActionName('default');
+            setGltfModelUrl("/empty_old_garage_room.glb");
+            if (pointLightRef.current) pointLightRef.current.color.set('#ffffff'); // white light
             break;
         default:
             console.log(`Unknown input: ${input}`);
@@ -42,18 +61,22 @@ export default function Home() {
 
   return (
     <div style={{ width: '99vw', height: '98vh' }}>
-      <Canvas style={{ background: 'lightgray' }}>
+      <Canvas style={{ background: 'black' }}>
         <CameraSetup />
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+        {/* <ambientLight /> */}
+        {/* <pointLight ref={pointLightRef} position={[10, 10, 10]} /> */}
+        <directionalLight 
+            ref={pointLightRef} 
+            position={[0, 10, 5]} 
+            intensity={1} 
+            color="#ff0000" // default color
+        />
 
-        {/* <FBXModel url="https://faced.io/teleported/teleported.fbx" /> */}
-        {/* <FBXModel url="/Capoeira.fbx" />         */}
         <DynamicCharacterModel actionName={actionName} />
         <OrbitControls />
         {/* <Environment background={true} path="/assets/skybox/" files={['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg']} /> */}
-        <GLTFModel url="/wisp_forest.glb" />
-        {/* <GLTFModel url="/Spiderman walking.glb" /> */}
+        <GLTFModel url={gltfModelUrl} />
+
       </Canvas>
 
       <InputPrompt onInputChange={handleUserInputChange} />

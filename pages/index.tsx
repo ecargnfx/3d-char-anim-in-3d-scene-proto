@@ -21,13 +21,23 @@ export default function Home() {
 
     const [actionName, setActionName] = useState('default');
     const pointLightRef = useRef();
-    const [gltfModelUrl, setGltfModelUrl] = useState("/wisp_forest.glb");
+    const [gltfModelUrl, setGltfModelUrl] = useState("/backrooms_long_hall.glb");
+    const [audioSrc, setAudioSrc] = useState('/audio/lobby.mp3');
+    const [audioInstance, setAudioInstance] = useState(null);
+
+
+
+    
+
 
 
     const handleUserInputChange = (input) => {
+        let newAudioSrc = '/audio/default.mp3';
+
         switch (input) {
         case 'walk':
             setActionName('walk');
+            newAudioSrc = '/audio/romantic.mp3';
             setGltfModelUrl("/neon_bedroom.glb");
             if (pointLightRef.current) {
                 pointLightRef.current.color.set('#ff0000'); // red light for walk
@@ -36,40 +46,63 @@ export default function Home() {
             break;
         case 'kick':
             setActionName('kick');
+            newAudioSrc = '/audio/kung_fu.mp3';
             setGltfModelUrl("/empty_old_garage_room.glb");
             if (pointLightRef.current) pointLightRef.current.color.set('#00ff00'); // green light for kick
             break;
         case 'dance':
             setActionName('dance');
-            setGltfModelUrl("/empty_old_garage_room.glb");
+            newAudioSrc = '/audio/HipHop.mp3';
+            setGltfModelUrl("/scifi_tron_studio.glb");
             if (pointLightRef.current) pointLightRef.current.color.set('#0000ff'); // blue light for dance
             break;
         case 'combo':
-            setActionName('combo');
-            setGltfModelUrl("/empty_old_garage_room.glb");
+            setActionName('crouch');
+            newAudioSrc = '/audio/dungeon.mp3';
+            setGltfModelUrl("/castle_dungeon.glb");
             if (pointLightRef.current) pointLightRef.current.color.set('#ffff00'); // yellow light for combo
             break;
         case 'stop':
             setActionName('default');
-            setGltfModelUrl("/empty_old_garage_room.glb");
+            newAudioSrc = '/audio/lobby.mp3';
+            setGltfModelUrl("/backrooms_long_hall.glb");
             if (pointLightRef.current) pointLightRef.current.color.set('#ffffff'); // white light
             break;
         default:
             console.log(`Unknown input: ${input}`);
         }
+
+        setAudioSrc(newAudioSrc);
+        playAudio(newAudioSrc);
+
     };
 
+    const playAudio = (src) => {
+        // Stop the current audio if it's playing
+        if (audioInstance) {
+            audioInstance.pause();
+            audioInstance.currentTime = 0;
+        }
+    
+        const audio = new Audio(src);
+        audio.play();
+    
+        // Update the audio instance in the state
+        setAudioInstance(audio);
+    };
+    
+    
   return (
     <div style={{ width: '99vw', height: '98vh' }}>
       <Canvas style={{ background: 'black' }}>
         <CameraSetup />
-        {/* <ambientLight /> */}
+        <ambientLight />
         {/* <pointLight ref={pointLightRef} position={[10, 10, 10]} /> */}
         <directionalLight 
             ref={pointLightRef} 
             position={[0, 10, 5]} 
             intensity={1} 
-            color="#ff0000" // default color
+            color="#ffffff" // default color
         />
 
         <DynamicCharacterModel actionName={actionName} />

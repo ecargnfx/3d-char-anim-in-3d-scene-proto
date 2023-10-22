@@ -7,10 +7,10 @@ import ArrowKeyNavigation from './ArrowKeyNavigation';
 
 export default function FBXModelWithAnimations({ actionName }) {
   const baseModel = useFBX('/basic-T.fbx');
-  const walkAnim = useFBX('/basic-walk.fbx');
+  const walkAnim = useFBX('/basic-jazz.fbx');
   const kickAnim = useFBX('/basic-kick.fbx');
   const danceAnim = useFBX('/basic-dance.fbx');
-  const crouchAnim = useFBX('/basic-crouch.fbx');
+  const crouchAnim = useFBX('/basic-combo.fbx');
 
   const [mixer] = useState(() => new AnimationMixer(baseModel));
   const animations = useRef<THREE.AnimationAction[]>([]);

@@ -58,7 +58,7 @@ async def gen_setup(request: Request):
         # print(f"Generated shader: {shader}")
 
         setup = json.loads(setup, strict=False)
-        # print(f'setup to json: {shader}')
+        print(f'setup to json: {setup}')
 
         return JSONResponse(content=setup)
 

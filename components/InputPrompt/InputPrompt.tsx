@@ -28,7 +28,9 @@ const InputPrompt: React.FC<InputPromptProps> = ({ onInputChange }) => {
       <div className="textfield">
         <img src="/assets/icons/icon-upload.png" alt="Left Icon 1" />
         <img src="/assets/icons/icon-camera.png" alt="Left Icon 2" />
-        <input type="text" placeholder="Describe what you want to see" onChange={(e) => onInputChange(e.target.value)} />      
+
+          <input type="text" placeholder="Describe what you want to see" onChange={(e) => onInputChange(e.target.value)} />
+      
         <img src="/assets/icons/icon-send.png" alt="Right Icon 1" />
         <img src="/assets/icons/icon-mic.png" alt="Right Icon 2" />
       </div>

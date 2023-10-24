@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+// import { FaArrowRight } from "react-icons/fa";
 
 const API_URL = process.env.API_URL;
 
@@ -59,7 +59,7 @@ export default function Page() {
           onClick={handleSubmit}
           className="flex items-center justify-center w-full px-4 py-2 mt-4 text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:bg-indigo-700"
         >
-          <FaArrowRight className="ml-2" />
+          {/* <FaArrowRight className="ml-2" /> */}
         </button>
       </div>
     </div>
